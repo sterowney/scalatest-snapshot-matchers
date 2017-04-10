@@ -1,9 +1,12 @@
+val ScalaVersion = "2.11.0"
+val Organization = "commodityvectors"
+
 lazy val core =
   Project("scalatest-snapshot-matcher-core", file("scalatest-snapshot-matcher-core"))
     .settings(
-      organization := "commodityvectors",
+      organization := Organization,
       name := "scalatest-snapshot-matcher-core",
-      scalaVersion := "2.11.10"
+      scalaVersion := ScalaVersion
     )
     .settings(libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "2.2.6",
@@ -13,9 +16,9 @@ lazy val core =
 lazy val playJson =
   Project("scalatest-snapshot-matcher-play-json", file("scalatest-snapshot-matcher-play-json"))
     .settings(
-      organization := "commodityvectors",
+      organization := Organization,
       name := "scalatest-snapshot-matcher-play-json",
-      scalaVersion := "2.11.10"
+      scalaVersion := ScalaVersion
     )
     .settings(libraryDependencies ++= Seq(
       "com.typesafe.play" %% "play-json" % "2.6.0-M6"
