@@ -6,11 +6,13 @@ lazy val core =
     .settings(
       organization := Organization,
       name := "scalatest-snapshot-matcher-core",
-      scalaVersion := ScalaVersion
+      scalaVersion := ScalaVersion,
+      parallelExecution in Test := false
     )
     .settings(libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "2.2.6",
-      "com.googlecode.java-diff-utils" % "diffutils" % "1.2.1"
+      "com.googlecode.java-diff-utils" % "diffutils" % "1.2.1",
+      "commons-io" % "commons-io" % "2.4" % "test"
     ))
 
 lazy val playJson =
@@ -18,8 +20,10 @@ lazy val playJson =
     .settings(
       organization := Organization,
       name := "scalatest-snapshot-matcher-play-json",
-      scalaVersion := ScalaVersion
+      scalaVersion := ScalaVersion,
+      parallelExecution in Test := false
     )
     .settings(libraryDependencies ++= Seq(
-      "com.typesafe.play" %% "play-json" % "2.6.0-M6"
+      "com.typesafe.play" %% "play-json" % "2.6.0-M6",
+      "commons-io" % "commons-io" % "2.4" % "test"
     )).dependsOn(core)
