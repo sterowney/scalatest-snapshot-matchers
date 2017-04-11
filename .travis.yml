@@ -1,9 +1,9 @@
 language: scala
+sudo: false
+dist: trusty
 scala:
   - 2.11.10
 jdk:
   - oraclejdk8
-addons:
-  apt:
-    packages:
-    - oracle-java8-installer
+script:
+   - sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 test
