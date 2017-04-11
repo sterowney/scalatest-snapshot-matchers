@@ -19,6 +19,12 @@ val sharedSettings = Seq(
   releaseTagName := s"${name.value}v${version.value}"
 )
 
+lazy val root = Project("scalatest-snapshot-matcher", file("."))
+  .settings(publish := {})
+  .settings(publishArtifact := false)
+  .settings(name := "scalatest-snapshot-matcher")
+  .settings(sharedSettings: _*)
+
 lazy val core =
   Project("scalatest-snapshot-matcher-core", file("scalatest-snapshot-matcher-core"))
     .settings(name := "scalatest-snapshot-matcher-core")
