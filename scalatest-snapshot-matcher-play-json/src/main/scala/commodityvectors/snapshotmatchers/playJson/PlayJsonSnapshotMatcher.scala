@@ -17,7 +17,7 @@ trait PlayJsonSnapshotMatcher extends SnapshotLoader with SnapshotMessages {
           val parsed = Json.parse(content).as[T]
           val isEquals = equals.areEqual(parsed, in)
           MatchResult(isEquals, errorMessage(in.toString, parsed.toString), ContentsAreEqual)
-        case None => MatchResult(matches = false, s"Could not find snapshot for $explicitId", ContentsAreEqual)
+        case None => MatchResult(matches = false, s"Could not find snapshot for id: $explicitId", ContentsAreEqual)
       }
     }
   }

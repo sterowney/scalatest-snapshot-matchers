@@ -45,6 +45,9 @@ trait TestDataEnhancer {
 
 trait SnapshotMessages {
   val ContentsAreEqual = "Contents Are Equal"
+  val DefaultError = "Contents Are Different"
+
+  def snapshotPreventedError(key: String) = s"Snapshot [$key] was not generated due to Environment flag."
 
   def errorMessage(current: String, found: String): String = {
     val patch = DiffUtils.diff(found.split("\n").toList.asJava, current.split("\n").toList.asJava)
@@ -68,6 +71,7 @@ trait SnapshotMessages {
 trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestDataArgs with DefaultSerializers { self: fixture.Suite =>
 
   private var testMap: Map[String, Int] = Map.empty
+  private val ShouldGenerateSnapshot = sys.env.get("PREVENT_SNAPSHOT").isEmpty
 
   private def getCurrentAndSetNext(id: String, isExplicit: Boolean): String = {
     val next = testMap.getOrElse(id, 0) + 1
@@ -86,7 +90,9 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
           val serialized = s.serialize(left)
           val isEquals = serialized == content
 
-          if(!isEquals) {
+          if(isEquals) {
+            MatchResult(matches = true, DefaultError, ContentsAreEqual)
+          } else if(ShouldGenerateSnapshot) {
             println(
               s"""
                  |
@@ -96,12 +102,16 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
             val answer = StdIn.readLine(s"${Console.YELLOW}Do you want to update the snapshot? [y/n] ")
             if(answer == "y") {
               writeSnapshot(testIdentifier, left)
-              MatchResult(matches = true, "", ContentsAreEqual)
-            } else MatchResult(serialized == content, errorMessage(serialized, content), ContentsAreEqual)
-          } else MatchResult(matches = true, "", ContentsAreEqual)
-        case _ =>
+              MatchResult(matches = true, DefaultError, ContentsAreEqual)
+            } else MatchResult(matches = false, errorMessage(serialized, content), ContentsAreEqual)
+          } else {
+            MatchResult(matches = false, snapshotPreventedError(testIdentifier), ContentsAreEqual)
+          }
+        case None if ShouldGenerateSnapshot =>
           writeSnapshot(testIdentifier, left)
-          MatchResult(matches = true, "", ContentsAreEqual)
+          MatchResult(matches = true, DefaultError, ContentsAreEqual)
+        case None if !ShouldGenerateSnapshot =>
+          MatchResult(matches = false, snapshotPreventedError(testIdentifier), ContentsAreEqual)
       }
     }
   }

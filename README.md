@@ -129,3 +129,11 @@ class MySpec extends fixture.WordSpec with Matchers with SnapshotMatcher with Pl
 }
 
 ```
+
+### Future Changes
+
+- [] Add Support for scalatest 3
+- [] Remove requirement on fixture tests
+- [] Add configurable snapshot folder
+- [] Improve base serialization for improved diffs
+- [] Add support for more extensions (json4s, circe, scalajs, etc)

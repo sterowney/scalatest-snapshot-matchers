@@ -1,5 +1,5 @@
 val ScalaVersion = "2.11.0"
-val Organization = "commodityvectors"
+val Organization = "com.commodityvectors"
 
 lazy val core =
   Project("scalatest-snapshot-matcher-core", file("scalatest-snapshot-matcher-core"))
