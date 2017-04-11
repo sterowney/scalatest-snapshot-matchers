@@ -33,7 +33,14 @@ class DefaultSerializersSpec extends fixture.WordSpec with Matchers with Snapsho
       case class Complex(v1: Int, v2: String, v3: Double, v4: List[Option[String]], v5: Map[Option[String], Seq[Complex]])
       val child = Complex(1, "2", 3.0, List(Option("Me")), Map())
       val instance = Complex(1, "2", 3.0, List(Option("Me")), Map(Option("you") -> Seq(child)))
-      SnapshotSerializer.serialize(instance) shouldEqual "Complex(1,2,3.0,List(Some(Me)),Map(Some(you) -> List(Complex(1,2,3.0,List(Some(Me)),Map()))))"
+      SnapshotSerializer.serialize(instance) shouldEqual
+        s"""|Complex(
+            |  v1 = 1,
+            |  v2 = "2",
+            |  v3 = 3.0,
+            |  v4 = List(Some("Me")),
+            |  v5 = Map(Some(you) -> List(Complex(1,2,3.0,List(Some(Me)),Map())))
+            |)""".stripMargin
     }
 
     "Allow custom serializers" in { implicit test =>
