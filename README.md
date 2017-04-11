@@ -15,8 +15,14 @@
 
 Add this library as a test dependency of your project
 
+Add bintray resolver
+
+```scala
+resolvers += Resolver.bintrayRepo("commodityvectors", "commodityvectors-releases")
 ```
-libraryDependencies += "commodityvectors" %% "scalatest-snapshot-matcher-core" % "1.0.0"
+
+```scala
+libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-core" % "1.0.0"
 ```
 
 ### Test requirements
@@ -93,8 +99,8 @@ This can be a way to handle non deterministic fields like `UUID` and `DateTime.n
 
 There is another project to give the ability to work with PlayJson. You can add like below:
 
-```
-libraryDependencies += "commodityvectors" %% "scalatest-snapshot-matcher-play-json" % "1.0.0"
+```scala
+libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-play-json" % "1.0.0"
 ```
 
 To use it just extend your test with `PlayJsonSnapshotMatcher` as well as `SnapshotMatcher`
