@@ -1,4 +1,4 @@
-val ScalaVersion = "2.11.0"
+val ScalaVersion = "2.11.10"
 val Organization = "com.commodityvectors"
 
 val sharedSettings = Seq(
