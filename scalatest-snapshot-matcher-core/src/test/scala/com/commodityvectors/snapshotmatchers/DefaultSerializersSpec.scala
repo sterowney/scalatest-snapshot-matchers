@@ -38,7 +38,7 @@ class DefaultSerializersSpec extends fixture.WordSpec with Matchers with Snapsho
             |  v1 = 1,
             |  v2 = "2",
             |  v3 = 3.0,
-            |  v4 = List(Some(Me)),
+            |  v4 = List(Some("Me")),
             |  v5 = Map(Some(you) -> List(Complex(1,2,3.0,List(Some(Me)),Map())))
             |)""".stripMargin
     }

@@ -13,7 +13,12 @@ val sharedSettings = Seq(
       <url>git@github.com:commodityvectors/scalatest-snapshot-matcher.git</url>
       <connection>scm:git:git@github.com:commodityvectors/scalatest-snapshot-matcher.git</connection>
     </scm>
-  )
+  ),
+  releaseUseGlobalVersion := false,
+  releaseTagComment := s"[${name.value}] Releasing ${version.value}",
+  releaseCommitMessage := s"[${name.value}] Setting version to ${version.value}",
+  releaseTagName := s"${name.value}v${version.value}",
+  releaseVersionFile := file(baseDirectory.value + "/version.sbt")
 )
 
 lazy val core =
