@@ -1,4 +1,4 @@
-package commodityvectors.snapshotmatchers
+package com.commodityvectors.snapshotmatchers
 
 import java.io.File
 
@@ -10,7 +10,7 @@ import scala.util.Try
 class SnapshotGenerationSpec extends fixture.WordSpec with Matchers with SnapshotMatcher with BeforeAndAfterEach {
 
   val snapshotFolder: String = "scalatest-snapshot-matcher-core/src/test/__snapshots__"
-  val currentSpecPath: String = s"$snapshotFolder/commodityvectors/snapshotmatchers/SnapshotGenerationSpec"
+  val currentSpecPath: String = s"$snapshotFolder/com/commodityvectors/snapshotmatchers/SnapshotGenerationSpec"
 
   override def afterEach(): Unit = {
     Try(FileUtils.deleteDirectory(new File(snapshotFolder)))

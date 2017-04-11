@@ -1,4 +1,4 @@
-package commodityvectors.snapshotmatchers
+package com.commodityvectors.snapshotmatchers
 
 trait SnapshotSerializer[-T] {
   def serialize(in: T): String

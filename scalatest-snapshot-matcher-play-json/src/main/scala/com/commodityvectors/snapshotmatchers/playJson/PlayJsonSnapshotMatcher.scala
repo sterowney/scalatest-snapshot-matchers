@@ -1,6 +1,6 @@
-package commodityvectors.snapshotmatchers.playJson
+package com.commodityvectors.snapshotmatchers.playJson
 
-import commodityvectors.snapshotmatchers.{SnapshotLoader, SnapshotMessages, SnapshotSerializer}
+import com.commodityvectors.snapshotmatchers.{SnapshotLoader, SnapshotMessages, SnapshotSerializer}
 import org.scalactic.Equality
 import org.scalatest.matchers.{MatchResult, Matcher}
 import play.api.libs.json.{JsValue, Json, Reads}

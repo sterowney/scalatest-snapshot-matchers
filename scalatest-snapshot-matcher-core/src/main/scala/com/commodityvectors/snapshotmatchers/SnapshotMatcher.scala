@@ -1,4 +1,4 @@
-package commodityvectors.snapshotmatchers
+package com.commodityvectors.snapshotmatchers
 
 import java.io.{File, PrintWriter}
 

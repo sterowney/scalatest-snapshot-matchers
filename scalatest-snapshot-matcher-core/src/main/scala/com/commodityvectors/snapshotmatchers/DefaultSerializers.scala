@@ -1,6 +1,6 @@
-package commodityvectors.snapshotmatchers
+package com.commodityvectors.snapshotmatchers
 
-import commodityvectors.snapshotmatchers.utils.PrettyPrint
+import com.commodityvectors.snapshotmatchers.utils.PrettyPrint
 
 trait DefaultSerializers {
   implicit def anySerializer[T] = new SnapshotSerializer[T] {

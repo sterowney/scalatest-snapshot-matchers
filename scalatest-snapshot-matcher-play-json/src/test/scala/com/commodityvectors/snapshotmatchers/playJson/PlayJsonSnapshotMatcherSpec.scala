@@ -1,8 +1,8 @@
-package commodityvectors.snapshotmatchers.playJson
+package com.commodityvectors.snapshotmatchers.playJson
 
 import java.io.File
 
-import commodityvectors.snapshotmatchers.{SnapshotMatcher, SnapshotSerializer}
+import com.commodityvectors.snapshotmatchers.{SnapshotMatcher, SnapshotSerializer}
 import org.apache.commons.io.FileUtils
 import org.scalatest.{BeforeAndAfterEach, Matchers, fixture}
 import play.api.libs.json.{Format, JsValue, Json}
@@ -14,7 +14,7 @@ class PlayJsonSnapshotMatcherSpec extends fixture.WordSpec with Matchers with Sn
   implicit lazy val jsonFormat: Format[Test] = Json.format[Test]
 
   val snapshotFolder: String = "scalatest-snapshot-matcher-play-json/src/test/__snapshots__"
-  val currentSpecPath: String = s"$snapshotFolder/commodityvectors/snapshotmatchers/playJson/PlayJsonSnapshotMatcherSpec"
+  val currentSpecPath: String = s"$snapshotFolder/com/commodityvectors/snapshotmatchers/playJson/PlayJsonSnapshotMatcherSpec"
 
   override def afterEach(): Unit = {
     Try(FileUtils.deleteDirectory(new File(snapshotFolder)))

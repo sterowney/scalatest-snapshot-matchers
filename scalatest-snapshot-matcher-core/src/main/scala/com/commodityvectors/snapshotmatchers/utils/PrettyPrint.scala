@@ -1,4 +1,4 @@
-package commodityvectors.snapshotmatchers.utils
+package com.commodityvectors.snapshotmatchers.utils
 
 object PrettyPrint {
   /**
