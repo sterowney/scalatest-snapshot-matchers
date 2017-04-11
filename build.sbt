@@ -24,6 +24,7 @@ lazy val root = Project("scalatest-snapshot-matcher", file("."))
   .settings(publishArtifact := false)
   .settings(name := "scalatest-snapshot-matcher")
   .settings(sharedSettings: _*)
+  .aggregate(core, playJson)
 
 lazy val core =
   Project("scalatest-snapshot-matcher-core", file("scalatest-snapshot-matcher-core"))
