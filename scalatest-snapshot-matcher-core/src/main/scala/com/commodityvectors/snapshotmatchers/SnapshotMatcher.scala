@@ -2,6 +2,7 @@ package com.commodityvectors.snapshotmatchers
 
 import java.io.{File, PrintWriter}
 
+import com.typesafe.config.ConfigFactory
 import difflib.DiffUtils
 import org.scalatest.matchers.{MatchResult, Matcher}
 import org.scalatest.{Outcome, SuiteMixin, TestData, fixture}
@@ -10,10 +11,17 @@ import collection.JavaConverters._
 import scala.io.{Source, StdIn}
 import scala.util.Try
 
+private object SnapshotLoader {
+  val DefaultSnapshotFolder = "src/test/__snapshots__"
+}
+
 trait SnapshotLoader {
+  import SnapshotLoader._
+
+  private val conf = ConfigFactory.load()
   private val testFolder = getClass.getName.replaceAll("\\.", "/")
-  private val snapshotFolder = "/__snapshots__"
-  private val fullWritePath = s"${getClass.getResource("").getPath.split("target").head}src/test$snapshotFolder/$testFolder"
+  private val snapshotFolder = Try(conf.getString("snapshotmatcher.snapshotFolder")).toOption.getOrElse(DefaultSnapshotFolder)
+  private val fullWritePath = s"${getClass.getResource("").getPath.split("target").head}$snapshotFolder/$testFolder"
 
   private def folderPath: String = new File(s"$fullWritePath").getAbsolutePath
   private def filePath(id: String): String = new File(s"$folderPath/$id.snap").getAbsolutePath

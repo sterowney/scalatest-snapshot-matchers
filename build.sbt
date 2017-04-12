@@ -33,6 +33,7 @@ lazy val core =
     .settings(libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "2.2.6",
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2.1",
+      "com.typesafe" % "config" % "1.3.1",
       "commons-io" % "commons-io" % "2.4" % "test"
     ))
 
