@@ -38,8 +38,9 @@ trait SnapshotLoader {
   }
 }
 
-trait TestDataArgs extends SuiteMixin { this: fixture.Suite =>
+trait TestDataArgs extends SuiteMixin { this: fixture.TestSuite =>
   type FixtureParam = TestData
+
   override def withFixture(test: OneArgTest): Outcome = {
     withFixture(test.toNoArgTest(test))
   }
@@ -76,7 +77,7 @@ trait SnapshotMessages {
   }
 }
 
-trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestDataArgs with DefaultSerializers { self: fixture.Suite =>
+trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestDataArgs with DefaultSerializers { self: fixture.TestSuite =>
 
   private var testMap: Map[String, Int] = Map.empty
   private val ShouldGenerateSnapshot = sys.env.get("PREVENT_SNAPSHOT").isEmpty

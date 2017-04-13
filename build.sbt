@@ -31,7 +31,7 @@ lazy val core =
     .settings(name := "scalatest-snapshot-matcher-core")
     .settings(sharedSettings: _*)
     .settings(libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.6",
+      "org.scalatest" %% "scalatest" % "3.0.1",
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2.1",
       "com.typesafe" % "config" % "1.3.1",
       "commons-io" % "commons-io" % "2.4" % "test"
