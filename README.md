@@ -22,8 +22,13 @@ resolvers += Resolver.bintrayRepo("commodityvectors", "commodityvectors-releases
 ```
 
 ```scala
-libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-core" % "1.0.0"
+libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-core" % "2.0.0"
 ```
+
+| scalatest version | snapshot matcher version |
+|-------------------|--------------------------|
+|      2.2.x        |          1.1.0           |
+|      3.0.x        |          2.0.0           |
 
 ### Test requirements
 
@@ -100,7 +105,7 @@ This can be a way to handle non deterministic fields like `UUID` and `DateTime.n
 There is another project to give the ability to work with PlayJson. You can add like below:
 
 ```scala
-libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-play-json" % "1.0.0"
+libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-play-json" % "2.0.0"
 ```
 
 To use it just extend your test with `PlayJsonSnapshotMatcher` as well as `SnapshotMatcher`
@@ -138,8 +143,8 @@ class MySpec extends fixture.WordSpec with Matchers with SnapshotMatcher with Pl
 
 ### Future Changes
 
-- [ ] Add Support for scalatest 3
+- [x] Add Support for scalatest 3
 - [ ] Remove requirement on fixture tests
-- [ ] Add configurable snapshot folder
-- [ ] Improve base serialization for improved diffs
+- [x] Add configurable snapshot folder
+- [x] Improve base serialization for improved diffs
 - [ ] Add support for more extensions (json4s, circe, scalajs, etc)
