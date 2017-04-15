@@ -3,6 +3,7 @@ sudo: false
 dist: trusty
 scala:
   - 2.11.10
+  - 2.12.1
 jdk:
   - oraclejdk8
 script:

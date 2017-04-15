@@ -1,10 +1,12 @@
-val ScalaVersion = "2.11.10"
+val ScalaVersion = "2.12.1"
 val Organization = "com.commodityvectors"
 
 val sharedSettings = Seq(
   organization := Organization,
   scalaVersion := ScalaVersion,
   parallelExecution in Test := false,
+  releaseCrossBuild := true,
+  crossScalaVersions := Seq("2.11.8", ScalaVersion),
   bintrayOrganization := Some("commodityvectors"),
   bintrayRepository := "commodityvectors-releases",
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
