@@ -4,6 +4,7 @@ val Organization = "com.commodityvectors"
 val sharedSettings = Seq(
   organization := Organization,
   scalaVersion := ScalaVersion,
+  scalafmtOnCompile := true,
   parallelExecution in Test := false,
   releaseCrossBuild := true,
   crossScalaVersions := Seq("2.11.8", ScalaVersion),
@@ -43,7 +44,9 @@ lazy val playJson =
   Project("scalatest-snapshot-matcher-play-json", file("scalatest-snapshot-matcher-play-json"))
     .settings(name := "scalatest-snapshot-matcher-play-json")
     .settings(sharedSettings: _*)
-    .settings(libraryDependencies ++= Seq(
-      "com.typesafe.play" %% "play-json" % "2.6.7",
-      "commons-io" % "commons-io" % "2.6" % "test"
-    )).dependsOn(core)
+    .settings(
+      libraryDependencies ++= Seq(
+        "com.typesafe.play" %% "play-json" % "2.6.7",
+        "commons-io" % "commons-io" % "2.6" % "test"
+      ))
+    .dependsOn(core)

@@ -22,15 +22,19 @@ class DefaultSerializersSpec extends fixture.WordSpec with Matchers with Snapsho
       SnapshotSerializer.serialize(Vector(Test(1))) shouldEqual "Vector(Test(1))"
     }
 
-     "Serializer maps" in { implicit test =>
-       SnapshotSerializer.serialize(Map(Test(1) -> Test(2))) shouldEqual "Map(Test(1) -> Test(2))"
-       SnapshotSerializer.serialize(Map("key" -> Test(2))) shouldEqual "Map(key -> Test(2))"
-       SnapshotSerializer.serialize(Map(10 -> Test(2))) shouldEqual "Map(10 -> Test(2))"
-       SnapshotSerializer.serialize(Map(10.0 -> Test(2))) shouldEqual "Map(10.0 -> Test(2))"
-     }
+    "Serializer maps" in { implicit test =>
+      SnapshotSerializer.serialize(Map(Test(1) -> Test(2))) shouldEqual "Map(Test(1) -> Test(2))"
+      SnapshotSerializer.serialize(Map("key" -> Test(2))) shouldEqual "Map(key -> Test(2))"
+      SnapshotSerializer.serialize(Map(10 -> Test(2))) shouldEqual "Map(10 -> Test(2))"
+      SnapshotSerializer.serialize(Map(10.0 -> Test(2))) shouldEqual "Map(10.0 -> Test(2))"
+    }
 
     "Serialize composed types" in { implicit test =>
-      case class Complex(v1: Int, v2: String, v3: Double, v4: List[Option[String]], v5: Map[Option[String], Seq[Complex]])
+      case class Complex(v1: Int,
+                         v2: String,
+                         v3: Double,
+                         v4: List[Option[String]],
+                         v5: Map[Option[String], Seq[Complex]])
       val child = Complex(1, "2", 3.0, List(Option("Me")), Map())
       val instance = Complex(1, "2", 3.0, List(Option("Me")), Map(Option("you") -> Seq(child)))
       SnapshotSerializer.serialize(instance) shouldEqual

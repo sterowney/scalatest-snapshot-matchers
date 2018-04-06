@@ -9,12 +9,18 @@ import play.api.libs.json.{Format, JsValue, Json}
 
 import scala.util.Try
 
-class PlayJsonSnapshotMatcherSpec extends fixture.WordSpec with Matchers with SnapshotMatcher with PlayJsonSnapshotMatcher with BeforeAndAfterEach {
+class PlayJsonSnapshotMatcherSpec
+    extends fixture.WordSpec
+    with Matchers
+    with SnapshotMatcher
+    with PlayJsonSnapshotMatcher
+    with BeforeAndAfterEach {
   case class Test(value: Int)
   implicit lazy val jsonFormat: Format[Test] = Json.format[Test]
 
   val snapshotFolder: String = "scalatest-snapshot-matcher-play-json/src/test/__snapshots__"
-  val currentSpecPath: String = s"$snapshotFolder/com/commodityvectors/snapshotmatchers/playJson/PlayJsonSnapshotMatcherSpec"
+  val currentSpecPath: String =
+    s"$snapshotFolder/com/commodityvectors/snapshotmatchers/playJson/PlayJsonSnapshotMatcherSpec"
 
   override def afterEach(): Unit = {
     Try(FileUtils.deleteDirectory(new File(snapshotFolder)))

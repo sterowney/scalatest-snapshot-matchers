@@ -7,4 +7,4 @@ scala:
 jdk:
   - oraclejdk8
 script:
-   - sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 test
+   - sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 scalafmtCheck scalafmtSbtCheck test

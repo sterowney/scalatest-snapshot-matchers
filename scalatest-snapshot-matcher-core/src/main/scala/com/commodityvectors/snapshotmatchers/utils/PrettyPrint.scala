@@ -1,6 +1,7 @@
 package com.commodityvectors.snapshotmatchers.utils
 
 object PrettyPrint {
+
   /**
     * { https://gist.github.com/carymrobbins/7b8ed52cd6ea186dbdf8 }
     * Pretty prints a Scala value similar to its source represention.
@@ -28,7 +29,7 @@ object PrettyPrint {
         '"' + replaceMap.foldLeft(s) { case (acc, (c, r)) => acc.replace(c, r) } + '"'
       // For an empty Seq just use its normal String representation.
       case xs: Seq[_] if xs.isEmpty => xs.toString()
-      case xs: Seq[_] =>
+      case xs: Seq[_]               =>
         // If the Seq is not too long, pretty print on one line.
         val resultOneLine = xs.map(nextDepth).toString()
         if (resultOneLine.length <= maxElementWidth) return resultOneLine
