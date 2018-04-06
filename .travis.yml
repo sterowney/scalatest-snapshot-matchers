@@ -3,8 +3,8 @@ sudo: false
 dist: trusty
 scala:
   - 2.11.10
-  - 2.12.1
+  - 2.12.5
 jdk:
   - oraclejdk8
 script:
-   - sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 test
+   - sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 scalafmtCheck scalafmtSbtCheck test

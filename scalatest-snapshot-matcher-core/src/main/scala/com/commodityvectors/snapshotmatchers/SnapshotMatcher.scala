@@ -20,7 +20,8 @@ trait SnapshotLoader {
 
   private val conf = ConfigFactory.load()
   private val testFolder = getClass.getName.replaceAll("\\.", "/")
-  private val snapshotFolder = Try(conf.getString("snapshotmatcher.snapshotFolder")).toOption.getOrElse(DefaultSnapshotFolder)
+  private val snapshotFolder =
+    Try(conf.getString("snapshotmatcher.snapshotFolder")).toOption.getOrElse(DefaultSnapshotFolder)
   private val fullWritePath = s"${getClass.getResource("").getPath.split("target").head}$snapshotFolder/$testFolder"
 
   private def folderPath: String = new File(s"$fullWritePath").getAbsolutePath
@@ -60,7 +61,9 @@ trait SnapshotMessages {
 
   def errorMessage(current: String, found: String): String = {
     val patch = DiffUtils.diff(found.split("\n").toList.asJava, current.split("\n").toList.asJava)
-    val diff = DiffUtils.generateUnifiedDiff("Original Snapshot", "New Snapshot", found.split("\n").toList.asJava, patch, 10).asScala
+    val diff = DiffUtils
+      .generateUnifiedDiff("Original Snapshot", "New Snapshot", found.split("\n").toList.asJava, patch, 10)
+      .asScala
     val parsedLines = diff.map { line =>
       if (line.startsWith("+"))
         s"${Console.GREEN}$line"
@@ -77,7 +80,8 @@ trait SnapshotMessages {
   }
 }
 
-trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestDataArgs with DefaultSerializers { self: fixture.TestSuite =>
+trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestDataArgs with DefaultSerializers {
+  self: fixture.TestSuite =>
 
   private var testMap: Map[String, Int] = Map.empty
   private val ShouldGenerateSnapshot = sys.env.get("PREVENT_SNAPSHOT").isEmpty
@@ -88,10 +92,13 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
     val current = next - 1
     if (current == 0) id
     else if (!isExplicit) s"$id-$current"
-    else throw new Exception("Cannot reuse snapshot for explicit identifier. There should be only a single snapshot match")
+    else
+      throw new Exception("Cannot reuse snapshot for explicit identifier. There should be only a single snapshot match")
   }
 
-  class SnapshotShouldMatch[T](explicitId: Option[String])(implicit s: SnapshotSerializer[T], test: TestData) extends Matcher[T] with TestDataEnhancer {
+  class SnapshotShouldMatch[T](explicitId: Option[String])(implicit s: SnapshotSerializer[T], test: TestData)
+      extends Matcher[T]
+      with TestDataEnhancer {
     override def apply(left: T): MatchResult = {
       val testIdentifier = getCurrentAndSetNext(explicitId.getOrElse(test.key), isExplicit = explicitId.nonEmpty)
       loadSnapshot(testIdentifier) match {
@@ -99,17 +106,16 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
           val serialized = s.serialize(left)
           val isEquals = serialized == content
 
-          if(isEquals) {
+          if (isEquals) {
             MatchResult(matches = true, DefaultError, ContentsAreEqual)
-          } else if(ShouldGenerateSnapshot) {
-            println(
-              s"""
+          } else if (ShouldGenerateSnapshot) {
+            println(s"""
                  |
                  |TEST SCOPE: ${test.name}
                  |
                  |${errorMessage(serialized, content)}""".stripMargin)
             val answer = StdIn.readLine(s"${Console.YELLOW}Do you want to update the snapshot? [y/n] ")
-            if(answer == "y") {
+            if (answer == "y") {
               writeSnapshot(testIdentifier, left)
               MatchResult(matches = true, DefaultError, ContentsAreEqual)
             } else MatchResult(matches = false, errorMessage(serialized, content), ContentsAreEqual)
@@ -126,5 +132,6 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
   }
 
   def matchSnapshot[T]()(implicit s: SnapshotSerializer[T], test: TestData) = new SnapshotShouldMatch[T](None)
-  def matchSnapshot[T](explicitId: String)(implicit s: SnapshotSerializer[T], test: TestData) = new SnapshotShouldMatch[T](Option(explicitId))
+  def matchSnapshot[T](explicitId: String)(implicit s: SnapshotSerializer[T], test: TestData) =
+    new SnapshotShouldMatch[T](Option(explicitId))
 }
