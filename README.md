@@ -22,13 +22,13 @@ resolvers += Resolver.bintrayRepo("commodityvectors", "commodityvectors-releases
 ```
 
 ```scala
-libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-core" % "2.0.0"
+libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-core" % "2.0.1"
 ```
 
 | scalatest version | snapshot matcher version |
 |-------------------|--------------------------|
 |      2.2.x        |          1.1.0           |
-|      3.0.x        |          2.0.0           |
+|      3.0.x        |          2.x.x           |
 
 ### Test requirements
 
