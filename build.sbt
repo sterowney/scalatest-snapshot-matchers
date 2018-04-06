@@ -1,4 +1,4 @@
-val ScalaVersion = "2.12.1"
+val ScalaVersion = "2.12.5"
 val Organization = "com.commodityvectors"
 
 val sharedSettings = Seq(
@@ -33,10 +33,10 @@ lazy val core =
     .settings(name := "scalatest-snapshot-matcher-core")
     .settings(sharedSettings: _*)
     .settings(libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.0.1",
+      "org.scalatest" %% "scalatest" % "3.0.5",
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2.1",
-      "com.typesafe" % "config" % "1.3.1",
-      "commons-io" % "commons-io" % "2.4" % "test"
+      "com.typesafe" % "config" % "1.3.2",
+      "commons-io" % "commons-io" % "2.6" % "test"
     ))
 
 lazy val playJson =
@@ -44,6 +44,6 @@ lazy val playJson =
     .settings(name := "scalatest-snapshot-matcher-play-json")
     .settings(sharedSettings: _*)
     .settings(libraryDependencies ++= Seq(
-      "com.typesafe.play" %% "play-json" % "2.6.0-M6",
-      "commons-io" % "commons-io" % "2.4" % "test"
+      "com.typesafe.play" %% "play-json" % "2.6.7",
+      "commons-io" % "commons-io" % "2.6" % "test"
     )).dependsOn(core)
