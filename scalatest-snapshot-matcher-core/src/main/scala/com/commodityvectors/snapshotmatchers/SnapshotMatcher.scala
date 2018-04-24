@@ -131,7 +131,8 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
     }
   }
 
-  def matchSnapshot[T]()(implicit s: SnapshotSerializer[T], test: TestData) = new SnapshotShouldMatch[T](None)
-  def matchSnapshot[T](explicitId: String)(implicit s: SnapshotSerializer[T], test: TestData) =
+  def matchSnapshot[T]()(implicit s: SnapshotSerializer[T], test: TestData): Matcher[T] =
+    new SnapshotShouldMatch[T](None)
+  def matchSnapshot[T](explicitId: String)(implicit s: SnapshotSerializer[T], test: TestData): Matcher[T] =
     new SnapshotShouldMatch[T](Option(explicitId))
 }

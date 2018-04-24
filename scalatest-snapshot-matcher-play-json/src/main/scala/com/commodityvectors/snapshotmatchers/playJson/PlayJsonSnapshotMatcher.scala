@@ -22,5 +22,6 @@ trait PlayJsonSnapshotMatcher extends SnapshotLoader with SnapshotMessages {
     }
   }
 
-  def deserializeAs[T](in: T)(implicit reads: Reads[T], equals: Equality[T]) = new JsonDeserializerShouldMatch[T](in)
+  def deserializeAs[T](in: T)(implicit reads: Reads[T], equals: Equality[T]): Matcher[String] =
+    new JsonDeserializerShouldMatch[T](in)
 }

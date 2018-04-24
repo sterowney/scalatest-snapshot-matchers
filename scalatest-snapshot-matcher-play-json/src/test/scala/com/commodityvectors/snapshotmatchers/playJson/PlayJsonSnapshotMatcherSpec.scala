@@ -37,9 +37,10 @@ class PlayJsonSnapshotMatcherSpec
 
     "generate json snapshot file" in { implicit test =>
       val instance = Test(1)
-      Json.toJson(instance) should matchSnapshot[JsValue]("customId")
+      Json.toJson(instance) should matchSnapshot("customId")
       FileUtils.readFileToString(
-        new File(s"$currentSpecPath/customId.snap")
+        new File(s"$currentSpecPath/customId.snap"),
+        "utf8"
       ) shouldEqual
         s"""{
            |  "value" : 1
@@ -48,7 +49,7 @@ class PlayJsonSnapshotMatcherSpec
 
     "allow deserialization" in { implicit test =>
       val instance = Test(1)
-      Json.toJson(instance) should matchSnapshot[JsValue]("anotherId")
+      Json.toJson(instance) should matchSnapshot("anotherId")
       "anotherId" should deserializeAs(instance)
     }
   }

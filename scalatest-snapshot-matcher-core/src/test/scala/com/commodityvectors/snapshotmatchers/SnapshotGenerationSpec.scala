@@ -19,17 +19,19 @@ class SnapshotGenerationSpec extends fixture.WordSpec with Matchers with Snapsho
   "SnapshotMatcher" should {
     "generate snapshot file with expectation" in { implicit test =>
       val value: Int = 1
-      value should matchSnapshot[Int]()
+      value should matchSnapshot()
       FileUtils.readFileToString(
-        new File(s"$currentSpecPath/snapshotmatcher-should-generate-snapshot-file-with-expectation.snap")
+        new File(s"$currentSpecPath/snapshotmatcher-should-generate-snapshot-file-with-expectation.snap"),
+        "utf8"
       ) shouldEqual "1"
     }
 
     "generate file with custom id" in { implicit test =>
       val value = 10
-      value should matchSnapshot[Int]("customId")
+      value should matchSnapshot("customId")
       FileUtils.readFileToString(
-        new File(s"$currentSpecPath/customId.snap")
+        new File(s"$currentSpecPath/customId.snap"),
+        "utf8"
       ) shouldEqual "10"
     }
   }
