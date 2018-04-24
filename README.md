@@ -22,7 +22,7 @@ resolvers += Resolver.bintrayRepo("commodityvectors", "commodityvectors-releases
 ```
 
 ```scala
-libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-core" % "2.0.1"
+libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-core" % "2.0.2"
 ```
 
 | scalatest version | snapshot matcher version |
@@ -49,7 +49,7 @@ Your test needs to be a fixture test in order for the matcher to have access to 
 ```scala
 package my.pckg
 
-import commodityvectors.snapshotmatchers.SnapshotMatcher
+import com.commodityvectors.snapshotmatchers.SnapshotMatcher
 import org.scalatest.{ Matchers, fixture }
 
 class MySpec extends fixture.WordSpec with Matchers with SnapshotMatcher {
@@ -105,7 +105,7 @@ This can be a way to handle non deterministic fields like `UUID` and `DateTime.n
 There is another project to give the ability to work with PlayJson. You can add like below:
 
 ```scala
-libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-play-json" % "2.0.0"
+libraryDependencies += "com.commodityvectors" %% "scalatest-snapshot-matcher-play-json" % "2.0.2"
 ```
 
 To use it just extend your test with `PlayJsonSnapshotMatcher` as well as `SnapshotMatcher`
@@ -119,8 +119,8 @@ You can do this by giving the `matchSnapshot` an Id by using `matchSnapshot("myI
 checking the deserialization with `"myId" should deserializeAs(yourThing)`
 
 ```scala
-import commodityvectors.snapshotmatchers.SnapshotMatcher
-import commodityvectors.snapshotmatchers.playJson.PlayJsonSnapshotMatcher
+import com.commodityvectors.snapshotmatchers.SnapshotMatcher
+import com.commodityvectors.snapshotmatchers.playJson.PlayJsonSnapshotMatcher
 import org.scalatest.{ Matchers, fixture }
 
 case class MyType(value: Int)
