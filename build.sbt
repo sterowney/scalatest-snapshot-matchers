@@ -35,7 +35,7 @@ lazy val core =
     .settings(sharedSettings: _*)
     .settings(libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.5",
-      "com.googlecode.java-diff-utils" % "diffutils" % "1.2.1",
+      "com.googlecode.java-diff-utils" % "diffutils" % "1.3.0",
       "com.typesafe" % "config" % "1.3.2",
       "commons-io" % "commons-io" % "2.6" % "test"
     ))
@@ -46,7 +46,7 @@ lazy val playJson =
     .settings(sharedSettings: _*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.typesafe.play" %% "play-json" % "2.6.7",
+        "com.typesafe.play" %% "play-json" % "2.6.10",
         "commons-io" % "commons-io" % "2.6" % "test"
       ))
     .dependsOn(core)
