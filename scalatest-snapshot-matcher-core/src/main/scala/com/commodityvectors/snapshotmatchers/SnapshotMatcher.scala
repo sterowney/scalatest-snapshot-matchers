@@ -66,11 +66,11 @@ trait SnapshotMessages {
       .asScala
     val parsedLines = diff.map { line =>
       if (line.startsWith("+"))
-        s"${Console.GREEN}$line"
+        s"${Console.GREEN}$line${Console.RESET}"
       else if (line.startsWith("-"))
-        s"${Console.RED}$line"
+        s"${Console.RED}$line${Console.RESET}"
       else
-        s"${Console.WHITE}$line"
+        s"${Console.WHITE}$line${Console.RESET}"
     }
 
     s"""|Text Did not match:
@@ -113,9 +113,13 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
                  |
                  |TEST SCOPE: ${test.name}
                  |
-                 |${errorMessage(serialized, content)}""".stripMargin)
-            val answer = StdIn.readLine(s"${Console.YELLOW}Do you want to update the snapshot? [y/n] ")
-            if (answer == "y") {
+                 |${errorMessage(serialized, content)}
+                 |
+                 |${Console.YELLOW}Do you want to update the snapshot? [y/n] ${Console.RESET}
+                 |""".stripMargin)
+
+            val answer = StdIn.readBoolean()
+            if (answer) {
               writeSnapshot(testIdentifier, left)
               MatchResult(matches = true, DefaultError, ContentsAreEqual)
             } else MatchResult(matches = false, errorMessage(serialized, content), ContentsAreEqual)
