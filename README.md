@@ -82,7 +82,7 @@ Containing `StateProcessorValue(10)` and `StateProcessorValue(20)` respectively
 
 Often on your tests one of your expectations will stop complying with the currently saved snapshot. This means that either the cod is not working as expected or the new output is the correct one.
 
-When running your tests locally, you can run the following `sbt test -DupdateSnapshots=true`
+When running your tests locally, you can run the following `updateSnapshots=true sbt test`
  
 ### Custom Serializers
 
