@@ -7,8 +7,8 @@ import difflib.DiffUtils
 import org.scalatest.matchers.{MatchResult, Matcher}
 import org.scalatest.{Outcome, SuiteMixin, TestData, fixture}
 
-import collection.JavaConverters._
-import scala.io.{Source, StdIn}
+import scala.collection.JavaConverters._
+import scala.io.Source
 import scala.util.Try
 
 private object SnapshotLoader {
@@ -84,7 +84,7 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
   self: fixture.TestSuite =>
 
   private var testMap: Map[String, Int] = Map.empty
-  private val ShouldGenerateSnapshot = sys.env.get("PREVENT_SNAPSHOT").isEmpty
+  private val ShouldGenerateSnapshot = sys.env.get("updateSnapshots").getOrElse("false").toBoolean
 
   private def getCurrentAndSetNext(id: String, isExplicit: Boolean): String = {
     val next = testMap.getOrElse(id, 0) + 1
@@ -102,37 +102,21 @@ trait SnapshotMatcher extends SnapshotLoader with SnapshotMessages with TestData
     override def apply(left: T): MatchResult = {
       val testIdentifier = getCurrentAndSetNext(explicitId.getOrElse(test.key), isExplicit = explicitId.nonEmpty)
       loadSnapshot(testIdentifier) match {
-        case Some(content) =>
-          val serialized = s.serialize(left)
-          val isEquals = serialized == content
-
-          if (isEquals) {
-            MatchResult(matches = true, DefaultError, ContentsAreEqual)
-          } else if (ShouldGenerateSnapshot) {
-            println(s"""
-                 |
-                 |TEST SCOPE: ${test.name}
-                 |
-                 |${errorMessage(serialized, content)}
-                 |
-                 |${Console.YELLOW}Do you want to update the snapshot? [y/n] ${Console.RESET}
-                 |""".stripMargin)
-
-            val answer = StdIn.readBoolean()
-            if (answer) {
-              writeSnapshot(testIdentifier, left)
-              MatchResult(matches = true, DefaultError, ContentsAreEqual)
-            } else MatchResult(matches = false, errorMessage(serialized, content), ContentsAreEqual)
-          } else {
-            MatchResult(matches = false, snapshotPreventedError(testIdentifier), ContentsAreEqual)
-          }
-        case None if ShouldGenerateSnapshot =>
+        case Some(content) if isEqual(content, left) =>
+          MatchResult(matches = true, DefaultError, ContentsAreEqual)
+        case Some(_) if ShouldGenerateSnapshot =>
+          println(s"${Console.YELLOW} ### Updating Snapshots: ${test.name} ###")
           writeSnapshot(testIdentifier, left)
           MatchResult(matches = true, DefaultError, ContentsAreEqual)
-        case None if !ShouldGenerateSnapshot =>
-          MatchResult(matches = false, snapshotPreventedError(testIdentifier), ContentsAreEqual)
+        case Some(content) =>
+          MatchResult(matches = false, errorMessage(s.serialize(left), content), ContentsAreEqual)
+        case None => // first time / new test
+          writeSnapshot(testIdentifier, left)
+          MatchResult(matches = true, DefaultError, ContentsAreEqual)
       }
     }
+
+    private def isEqual(content: String, left: T): Boolean = s.serialize(left) == content
   }
 
   def matchSnapshot[T]()(implicit s: SnapshotSerializer[T], test: TestData): Matcher[T] =
